@@ -1,19 +1,40 @@
 import './Register.scss';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
+
 
 const Register = () => {
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+
     let history = useHistory();
     const handleLogin = () => {
         history.push("/login");
     }
 
-    useEffect(() => {
-        axios.get("http://localhost:8080/api/test-api").then(data => {
-            console.log(">>>check data:", data);
-        })
-    }, []);
+    // useEffect(() => {
+    //     axios.get("http://localhost:8080/api/test-api").then(data => {
+    //         console.log(">>>check data:", data);
+    //     })
+    // }, []);
+
+    const handleRegister = () => {
+        //let userData = { email, phone, username, password, confirmPassword };
+        let userData = {
+            email: email,
+            "phone": phone,
+            username: username,
+            password: password,
+            "re-password": confirmPassword
+        }
+        console.log(">>> check user data:", userData);
+    }
 
     return (
         <div className="register-container">
@@ -33,25 +54,30 @@ const Register = () => {
                         </div>
                         <div className="form-group">
                             <label>Email</label>
-                            <input type="text" className="form-control" placeholder="Email address" />
+                            <input type="text" className="form-control" placeholder="Email address"
+                                value={email} onChange={(event) => setEmail(event.target.value)} />
                         </div>
                         <div className="form-group">
                             <label>Phone number</label>
-                            <input type="text" className="form-control" placeholder="Phone number" />
+                            <input type="text" className="form-control" placeholder="Phone number"
+                                value={phone} onChange={(event) => setPhone(event.target.value)} />
                         </div>
                         <div className="form-group">
                             <label>Username</label>
-                            <input type="text" className="form-control" placeholder="Username" />
+                            <input type="text" className="form-control" placeholder="Username"
+                                value={username} onChange={(event) => setUsername(event.target.value)} />
                         </div>
                         <div className="form-group">
                             <label>Password</label>
-                            <input type="password" className="form-control" placeholder="Password" />
+                            <input type="password" className="form-control" placeholder="Password"
+                                value={password} onChange={(event) => setPassword(event.target.value)} />
                         </div>
                         <div className="form-group">
                             <label>Re-enter Password</label>
-                            <input type="password" className="form-control" placeholder="Re-enter Password" />
+                            <input type="password" className="form-control" placeholder="Re-enter Password"
+                                value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} />
                         </div>
-                        <button className="btn btn-primary">Register</button>
+                        <button className="btn btn-primary" onClick={() => handleRegister()}>Register</button>
                         <hr />
                         <div className="text-center">
                             <button className="btn btn-success" onClick={() => handleLogin()}>
