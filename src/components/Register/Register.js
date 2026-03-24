@@ -2,7 +2,7 @@ import './Register.scss';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
+import { toast } from 'react-toastify';
 
 
 const Register = () => {
@@ -24,14 +24,44 @@ const Register = () => {
     //     })
     // }, []);
 
+    const isValidInputs = () => {
+        // if (!email) {
+        //     toast.error("Email is required!");
+        let regx = /\S+@\S+\.\S+/;
+        if (!regx.test(email)) {
+            toast.error("Email is not valid!");
+            return false;
+        }
+        //return false;}
+        if (!phone) {
+            toast.error("Phone is required!");
+            return false;
+        }
+        if (!password) {
+            toast.error("Password is required!");
+            return false;
+        }
+        if (password != confirmPassword) {
+            toast.error("Your password is not the same!");
+            return false;
+        }
+
+        return true;
+    }
+
     const handleRegister = () => {
-        //let userData = { email, phone, username, password, confirmPassword };
+
+
+        isValidInputs();
+
+        {/*mặc định lấy trường làm key
+        //let userData = { email, phone, username, password, confirmPassword };*/}
         let userData = {
             email: email,
             "phone": phone,
             username: username,
             password: password,
-            "re-password": confirmPassword
+            /*đặc biệt*/"re-password": confirmPassword
         }
         console.log(">>> check user data:", userData);
     }
@@ -54,7 +84,7 @@ const Register = () => {
                         </div>
                         <div className="form-group">
                             <label>Email</label>
-                            <input type="text" className="form-control" placeholder="Email address"
+                            <input type="text" className="form-control" placeholder="Email address "
                                 value={email} onChange={(event) => setEmail(event.target.value)} />
                         </div>
                         <div className="form-group">
